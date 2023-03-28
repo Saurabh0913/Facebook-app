@@ -193,7 +193,7 @@
               src="<%=comment.user.profile_picture %>"  alt=""
             />
             <div class="post__topInfo">
-              <h3><%= post.user.name %> </h3>
+              <h3><%=comment.user.name %> </h3>
               <p> <span><%= comment.createdAt.toLocaleTimeString([],{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',hourCycle:'h12' }) %>
               </span> </p>
             </div>
