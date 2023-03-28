@@ -1,10 +1,24 @@
 const express = require('express');// importing express 
+const mongoose = require('mongoose');
 const enviroment = require('./configration/enviroment');//environment
 const cookieParser = require('cookie-parser'); // importing cookie-parser
 const dotenv = require('dotenv');
 dotenv.config();
-const port = process.env.SERVER_PORT ;
 const app = express();
+const PORT = process.env.SERVER_PORT || 3000 ;
+
+//DATABSE THINGS
+const connectDB = async () => {
+    try{
+        const conn = await mongoose.connect(process.env.MONGO_URL);
+        console.log(`MongoDB is Connected Successfully:${conn.connection.host}`);
+     }catch(err){
+        console.log(`Error in connecting with MongoDB:${err}`);
+        process.exit(1);
+     }
+};
+     
+
 app.use(express.urlencoded({ extended: true }));// url endcoding
 app.use(cookieParser());// using cookie
 const expresslayouts = require('express-ejs-layouts');// Layouts setups
@@ -70,10 +84,16 @@ app.use(flash()); // Using Flash
 app.use(customFlashMiddleWare.setFlash); // using custum flash 
 app.use('/',require('./routers')); //Using Express Router For routing all access
 
-app.listen(port,function(err){  //server Check
-    if(err){
-        console.log('Error to Connecting the server');
-        return;
-    }
-    console.log('Successfull Connected With the Port:',port);
+// app.listen(port,function(err){  //server Check
+//    if(err){
+//        console.log('Error to Connecting the server');
+//        return
+//  }
+//    console.log('Successfull Connected With the Port:',port);
+//});
+
+connectDB(). then(() => {
+    app.listen(PORT,() => {
+        console.log(`Server Listening Successfully with the port:${PORT}`); 
+    });
 });
