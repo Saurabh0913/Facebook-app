@@ -22,7 +22,7 @@ const connectDB = async () => {
 app.use(express.urlencoded({ extended: true }));// url endcoding
 app.use(cookieParser());// using cookie
 const expresslayouts = require('express-ejs-layouts');// Layouts setups
-const dataBase = require('./configration/mongoose');// DataBase Connection
+// const dataBase = require('./configration/mongoose');// DataBase Connection
 const session = require('express-session');// express-session
 const flash = require('connect-flash');// for flash message require
 const customFlashMiddleWare = require('./configration/flash-middleware');// custom middleware for flash
